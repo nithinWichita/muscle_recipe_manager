@@ -1,7 +1,9 @@
-import { recipes } from "../data/recipes";
 import RecipeCard from "../components/RecipeCard";
+import { useRecipes } from "../context/RecipesContext";
 
 export default function Home() {
+  const { recipes } = useRecipes();
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">All Recipes</h1>
@@ -14,4 +16,3 @@ export default function Home() {
     </div>
   );
 }
-

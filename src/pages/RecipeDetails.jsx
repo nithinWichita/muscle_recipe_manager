@@ -1,12 +1,28 @@
 import { useParams } from "react-router-dom";
+import { useRecipes } from "../context/RecipesContext";
 
 export default function RecipeDetails() {
   const { id } = useParams();
+  const { recipes } = useRecipes();
+
+  const recipe = recipes.find((r) => r.id === id);
+
+  if (!recipe) return <p className="text-red-500">Recipe not found.</p>;
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Recipe Details</h1>
-      <p className="text-gray-600">Recipe ID: {id}</p>
+    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+      <img
+        src={recipe.image}
+        alt={recipe.title}
+        className="h-72 w-full object-cover"
+        onError={(e) => {
+          e.currentTarget.src = "https://picsum.photos/seed/fallback/1200/800";
+        }}
+      />
+      <div className="p-6">
+        <h1 className="text-3xl font-bold mb-2">{recipe.title}</h1>
+        <p className="text-gray-600">{recipe.description}</p>
+      </div>
     </div>
   );
 }
