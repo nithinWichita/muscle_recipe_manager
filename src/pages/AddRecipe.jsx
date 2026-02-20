@@ -9,6 +9,8 @@ export default function AddRecipe() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [category, setCategory] = useState("Dinner");
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,6 +20,7 @@ export default function AddRecipe() {
       title: title.trim(),
       description: description.trim(),
       image: image.trim() || "https://picsum.photos/seed/new/1200/800",
+      category,
     };
 
     setRecipes([newRecipe, ...recipes]);
@@ -61,6 +64,20 @@ export default function AddRecipe() {
             placeholder="https://..."
           />
         </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Category</label>
+          <select
+            className="w-full border rounded-lg px-3 py-2"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option>Breakfast</option>
+            <option>Lunch</option>
+            <option>Dinner</option>
+            <option>Snack</option>
+          </select>
+        </div>
+
 
         <button
           type="submit"

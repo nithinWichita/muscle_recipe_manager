@@ -10,7 +10,18 @@ export function RecipesProvider({ children }) {
   useEffect(() => {
     const stored = localStorage.getItem("recipes");
     if (stored) {
-      setRecipes(JSON.parse(stored));
+      const parsed = JSON.parse(stored);
+
+    // MIGRATION: add category if missing
+    const migrated = parsed.map((r) => ({
+      category: "Dinner", // default for old recipes
+      ...r,               // keep existing fields (if r.category exists, it overwrites default)
+    }));
+
+    setRecipes(migrated);
+
+    // optional but recommended: write back upgraded data
+    localStorage.setItem("recipes", JSON.stringify(migrated));
     } else {
       setRecipes(initialRecipes);
     }
@@ -22,8 +33,12 @@ export function RecipesProvider({ children }) {
       localStorage.setItem("recipes", JSON.stringify(recipes));
     }
   }, [recipes]);
+  function deleteRecipe(id) {
+    setRecipes((prev) => prev.filter((r) => r.id !== id));
+  }
 
-  const value = useMemo(() => ({ recipes, setRecipes }), [recipes]);
+
+  const value = useMemo(() => ({ recipes, setRecipes,deleteRecipe }), [recipes]);
 
   return (
     <RecipesContext.Provider value={value}>

@@ -5,19 +5,22 @@ export const recipes = [
     description: "Crispy dosa filled with spiced potato filling.",
     image:
       "https://images.unsplash.com/photo-1589301760014-d929f3979dbc",
-  },
+    category:"Breakfast"
+    },
   {
     id: "2",
     title: "Paneer Butter Masala",
     description: "Creamy tomato-based curry with soft paneer cubes.",
     image:
       "https://images.unsplash.com/photo-1604908554028-90d2bb0d9c1c",
-  },
+    category: "Dinner",
+    },
   {
     id: "3",
     title: "Chicken Biryani",
     description: "Fragrant rice layered with spiced chicken.",
     image:
       "https://images.unsplash.com/photo-1563379091339-03246963d94f",
+    category: "Lunch",
   },
 ];
