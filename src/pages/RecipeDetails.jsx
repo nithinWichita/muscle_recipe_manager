@@ -1,5 +1,6 @@
-import {useNavigate,  useParams } from "react-router-dom";
+
 import { useRecipes } from "../context/RecipesContext";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function RecipeDetails() {
   const { id } = useParams();
@@ -24,7 +25,13 @@ export default function RecipeDetails() {
       <div className="p-6">
         <h1 className="text-3xl font-bold mb-2">{recipe.title}</h1>
         <p className="text-gray-600">{recipe.description}</p>
-        <button
+
+        <Link
+          to={`/recipes/${recipe.id}/edit`}
+          className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-500"
+        >
+          Edit
+        </Link><button
           onClick={() => {
             deleteRecipe(recipe.id);
             navigate("/");

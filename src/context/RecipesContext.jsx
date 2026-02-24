@@ -12,16 +12,16 @@ export function RecipesProvider({ children }) {
     if (stored) {
       const parsed = JSON.parse(stored);
 
-    // MIGRATION: add category if missing
-    const migrated = parsed.map((r) => ({
-      category: "Dinner", // default for old recipes
-      ...r,               // keep existing fields (if r.category exists, it overwrites default)
-    }));
+      // MIGRATION: add category if missing
+      const migrated = parsed.map((r) => ({
+        category: "Dinner", // default for old recipes
+        ...r,               // keep existing fields (if r.category exists, it overwrites default)
+      }));
 
-    setRecipes(migrated);
+      setRecipes(migrated);
 
-    // optional but recommended: write back upgraded data
-    localStorage.setItem("recipes", JSON.stringify(migrated));
+      // optional but recommended: write back upgraded data
+      localStorage.setItem("recipes", JSON.stringify(migrated));
     } else {
       setRecipes(initialRecipes);
     }
@@ -36,9 +36,14 @@ export function RecipesProvider({ children }) {
   function deleteRecipe(id) {
     setRecipes((prev) => prev.filter((r) => r.id !== id));
   }
+  function updateRecipe(id, updates) {
+    setRecipes((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, ...updates } : r))
+    );
+  }
 
 
-  const value = useMemo(() => ({ recipes, setRecipes,deleteRecipe }), [recipes]);
+  const value = useMemo(() => ({ recipes, setRecipes, deleteRecipe, updateRecipe }), [recipes]);
 
   return (
     <RecipesContext.Provider value={value}>

@@ -3,6 +3,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import AddRecipe from "./pages/AddRecipe";
 import RecipeDetails from "./pages/RecipeDetails";
+import EditRecipe from "./pages/EditRecipe";
+
 import { RecipesProvider } from "./context/RecipesContext";
 
 export default function App() {
@@ -15,6 +17,8 @@ export default function App() {
             <Route path="/add" element={<AddRecipe />} />
             <Route path="/recipes/:id" element={<RecipeDetails />} />
             <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/recipes/:id/edit" element={<EditRecipe />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
