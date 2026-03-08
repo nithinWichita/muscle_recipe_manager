@@ -1,22 +1,32 @@
 import RecipeCard from "../components/RecipeCard";
 import { useRecipes } from "../context/RecipesContext";
-import { useMemo, useState } from "react";
+import { useMemo,useEffect, useState } from "react";
 
 export default function Home() {
   const { recipes } = useRecipes();
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(query);
   const [category, setCategory] = useState("All");
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [query]);
+  
   const filtered = useMemo(() => {
     return recipes.filter((r) => {
       const matchesQuery =
-        r.title.toLowerCase().includes(query.toLowerCase()) ||
-        r.description.toLowerCase().includes(query.toLowerCase());
+        r.title.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
+        r.description.toLowerCase().includes(debouncedQuery.toLowerCase());
 
       const matchesCategory = category === "All" || r.category === category;
 
       return matchesQuery && matchesCategory;
     });
-  }, [recipes, query, category]);
+  }, [recipes, debouncedQuery, category]);
+  
 
 
 
